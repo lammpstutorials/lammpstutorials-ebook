@@ -113,7 +113,6 @@ class WriteTex:
 
                 if "tutorials/tutorials" in figure_path:
                     figure_path = figure_path.split("tutorials/tutorials")[0] + "tutorials" + figure_path.split("tutorials/tutorials")[1]
-                
                 if os.path.exists(figure_path) is False:
                     print("Warning, figure not found", figure_path)
 
@@ -134,12 +133,12 @@ class WriteTex:
 
                 if align is None:
                     self.f.write(r'\begin{figure}[h!]'+'\n')
-                    self.f.write(r'\includegraphics[width=\linewidth]{tutorials/'+level+'/'+tutorial+'/'+name+'.png}'+'\n')
+                    self.f.write(r'\includegraphics[width=\linewidth]{converted_files/'+level+'/'+tutorial+'/'+name+'.png}'+'\n')
                     self.f.write(r'\end{figure}'+'\n')  
                 elif 'right' in align:
                     self.f.write(r'\hspace{-0.45cm}')
                     self.f.write(r'\begin{wrapfigure}{r}{4cm}'+'\n')
-                    self.f.write(r'\includegraphics[width=4cm]{tutorials/'+level+'/'+tutorial+'/'+name+'.png}'+'\n')
+                    self.f.write(r'\includegraphics[width=4cm]{converted_files/'+level+'/'+tutorial+'/'+name+'.png}'+'\n')
                     self.f.write(r'\end{wrapfigure}'+'\n')
         elif "figurelegend" in block_type:
             for line in filtered_block:
@@ -147,7 +146,7 @@ class WriteTex:
                 line = replace_special_character(line, '*->*', r'$\rightarrow$')
                 line = fix_link(self.RST, line)
                 line = fix_math(line)
-                line = fix_italic(line, replace_underscore=True)
+                line = fix_italic(line, replace_underscore=True)    
                 self.f.write('[legend-to-add]' + line)
                 self.f.write('\n')
         self.f.write('\n')

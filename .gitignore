@@ -2,3 +2,9 @@
 
 tex/converted_files/
 **/__pycache__/
+
+**/*.aux
+**/*.log
+**/*.out
+**/*.toc
+**/*.pdf

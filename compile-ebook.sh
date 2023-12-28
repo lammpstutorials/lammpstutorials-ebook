@@ -4,6 +4,8 @@ set -e
 # update lammps tutorials in case changes were made
 git submodule update --remote
 
+cd tex/
+
 var1=$1
 
 # convert the sphinx bibliography to ebook
@@ -20,5 +22,5 @@ then
 fi
 
 mv lammps-tutorials-ebook.pdf _lammps-tutorials-ebook.pdf 
-pdftk logo/first-page.pdf _lammps-tutorials-ebook.pdf  cat output lammps-tutorials-ebook.pdf
+pdftk ../logo/first-page.pdf _lammps-tutorials-ebook.pdf  cat output lammps-tutorials-ebook.pdf
 rm _lammps-tutorials-ebook.pdf
