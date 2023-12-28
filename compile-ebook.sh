@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# update lammps tutorials in case changes were made
+git submodule update --remote
+
 var1=$1
 
 # convert the sphinx bibliography to ebook
