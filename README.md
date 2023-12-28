@@ -1,1 +1,1 @@
-# ebook
+# LAMMPS tutorials, the ebook
