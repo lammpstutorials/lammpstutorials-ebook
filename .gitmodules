@@ -1,0 +1,3 @@
+[submodule "lammpstutorials.github.io"]
+	path = lammpstutorials.github.io
+	url = git@github.com:lammpstutorials/lammpstutorials.github.io.git
