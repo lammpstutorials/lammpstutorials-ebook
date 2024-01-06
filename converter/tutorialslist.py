@@ -8,4 +8,4 @@ tutorials = {"level1": ["lennard-jones-fluid",
                         "reactive-silicon-dioxide"]}
 
 non_tutorials = {"vmd": ["vmd-tutorial"],
-             "mdanalysis": ["mdanalysis-tutorial"]}
+                 "mdanalysis": ["mdanalysis-tutorial"]}
