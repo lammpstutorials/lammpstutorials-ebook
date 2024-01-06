@@ -14,10 +14,7 @@ class ReadRST:
     def convert_file(self):
         """Main convert function."""
         self.read_rst()
-
-        # REMOVED 6 MUST BE READDED
-        #self.include_extra()
-        
+        self.include_extra()
         self.detect_blocks()
         self.detect_sub_blocks()
         self.detect_title()
@@ -38,9 +35,9 @@ class ReadRST:
         new_content = []
         for line in self.file_content:
             if "non-tutorials/accessfile.rst" in line:
-                assert os.path.exists("../docs/sphinx/source/non-tutorials/accessfile.rst")
+                assert os.path.exists("../lammpstutorials.github.io/docs/sphinx/source/non-tutorials/accessfile.rst")
                 rst = rstparse.Parser()
-                with open("../docs/sphinx/source/non-tutorials/accessfile.rst") as f:
+                with open("../lammpstutorials.github.io/docs/sphinx/source/non-tutorials/accessfile.rst") as f:
                     rst.read(f)
                 rst.parse()
                 for extra_line in rst.lines:
