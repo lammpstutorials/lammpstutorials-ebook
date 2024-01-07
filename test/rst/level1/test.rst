@@ -21,11 +21,20 @@ Test RST file
 
 ..  container:: abstract
 
-    In summatione, investigatio in scientia de materia molli et
+    In summatione, *investigatio* in scientia de materia molli et
     simulatione moleculari praebet non solum intellectum profundiorem
-    de structuris et proprietatibus materiae, sed etiam viam ad
+    de *structuris* et :math:`x = 2` proprietatibus materiae, :math:`y = 3` sed etiam viam ad
     applicandam technologiam et innovationem in variis campis scientificis
     et industrialibus.
+
+..  container:: abstract
+
+    Simulationes Monte Carlo et Dynamics Molecularis, in mundo soft
+    matter, repraesentationem materiae submolecularem exhibent,
+    delineantes thermodynamicas et kineticas proprietates systematum.
+    Moleculae surfactantes in solutionibus amphiphilicis et
+    structurae micellarum sunt objecta principalia, scrutantes
+    adsorptionem et aggregationem molecularem.
 
 Figure
 ======
@@ -48,8 +57,8 @@ Random text
 
 ..  container:: justify
 
-    Some text that is supposed to the justified. 
-    
+    Some text that is supposed to the justified.
+
 ..  container:: justify
 
     Simulationes Monte Carlo et Dynamics Molecularis, in mundo soft
@@ -64,7 +73,7 @@ Some sub title
 
 ..  container:: justify
 
-    Sub content
+    Some sub content with an equation:
 
 .. math::
 
@@ -79,8 +88,9 @@ Random LAMMPS code
     dimension 3
     boundary p p p
     atom_style atomic
-    pair_style hybrid/overlay lj/cut 2.5 & 
-         morse 5.0 1.8 2.5 1.5
+
+    pair_style hybrid/overlay lj/cut 2.5 &
+        morse 5.0 1.8 2.5 1.5
 
     velocity all create 1.0 87287
 

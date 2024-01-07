@@ -95,11 +95,16 @@ class WriteTex:
                         self.write_equation(filtered_subblock_0, types_subblock[cpt])
                     cpt += 1
                 else:
-                    if ('math' not in types_subblock[cpt-1]):
-                        n = count_line(line)
-                        line = line[n:]
+
+                    if cpt == 0:
                         self.f.write(line)
                         self.f.write('\n')
+                    else:
+                        if ('math' not in types_subblock[cpt-1]):
+                            n = count_line(line)
+                            line = line[n:]
+                            self.f.write(line)
+                            self.f.write('\n')
             self.f.write(r'\end{tcolorbox}')
         elif "hatnote" in block_type:
             for line in filtered_block:
@@ -207,9 +212,9 @@ class WriteTex:
             self.f.write(r'\begin{lcverbatim}'+'\n')
             for line in filtered_block:
                 if ':caption:' not in line:
-                    if len(line) > 80:
-                        print("WARNING: line too long")
+                    if len(line) > 76:
                         print(line)
+                    assert len(line) < 76, """WARNING: line too long"""
                     self.f.write(line)
                     self.f.write('\n')
             self.f.write(r'\end{lcverbatim}'+'\n')
