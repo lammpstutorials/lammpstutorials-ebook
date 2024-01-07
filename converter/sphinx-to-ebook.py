@@ -24,12 +24,13 @@ for level in tutorials.keys():
     for tutorial in tutorials[level]:
         print(level, "tutorial", tutorial)
         print("-----------------------------------------")
-        rst_file_name = git_path+'/lammpstutorials.github.io/docs/sphinx/source/tutorials/'+level+'/'+tutorial+'.rst'
+        rst_path = git_path+'/lammpstutorials.github.io/docs/sphinx/source/tutorials/'+level+'/'
+        rst_file_name = rst_path+tutorial+'.rst'
         tex_file_name = git_path+'/tex/converted_files/'+level+'/'+tutorial+'.tex'   
-        RST = ReadRST(rst_file_name)
+        RST = ReadRST(rst_file_name, rst_path)
         RST.convert_file()
         assert len(RST.label_positions) == 1, """Careful, more than one label"""
-        TEX = WriteTex(tex_file_name, RST, git_path)
+        TEX = WriteTex(tex_file_name, RST, git_path, rst_path)
         TEX.convert_file()
         FIX = FixDocument(tex_file_name)
         FIX.fix_document()

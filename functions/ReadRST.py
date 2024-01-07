@@ -6,19 +6,20 @@ from utilities import count_line
 
 class ReadRST:
     """Read RST file."""
-    def __init__(self, file_name, *args, **kwargs,):
+    def __init__(self, file_name, rst_path, *args, **kwargs,):
         """Initialize"""
         super().__init__(*args, **kwargs)
         self.file_name = file_name
+        self.rst_path = rst_path
 
-    #def convert_file(self):
-    #    """Main convert function."""
-    #    self.read_rst()
-    #    self.include_extra()
-    #    self.detect_blocks()
-    #    self.detect_sub_blocks()
-    #    self.detect_title()
-    #    self.detect_label_position()
+    def convert_file(self):
+        """Main convert function."""
+        self.read_rst()
+        self.include_extra()
+        self.detect_blocks()
+        self.detect_sub_blocks()
+        self.detect_title()
+        self.detect_label_position()
 
     def read_rst(self):
         """Convert the rst file into a list of strings"""
@@ -31,15 +32,15 @@ class ReadRST:
             file_content.append(line)
         self.file_content = file_content
 
-    def include_extra(self, rst_path, verbose = False):
+    def include_extra(self, verbose = False):
         new_content = []
         for line in self.file_content:
             if ("include::" in line):
                 relative_path = line.split("::")[1][1:]
                 if verbose:
-                    print(rst_path + relative_path)
+                    print(self.rst_path + relative_path)
                 rst = rstparse.Parser()
-                with open(rst_path+relative_path) as f:
+                with open(self.rst_path+relative_path) as f:
                     rst.read(f)
                 rst.parse()
                 for extra_line in rst.lines:

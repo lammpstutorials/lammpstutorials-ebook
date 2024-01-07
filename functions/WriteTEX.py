@@ -16,7 +16,6 @@ class WriteTex:
         self.git_path = git_path
         self.nonumber = nonumber
 
-    """
     def convert_file(self):
         # Main convert function.
         self.open_f()
@@ -24,7 +23,6 @@ class WriteTex:
         self.write_main_label()
         self.loop_on_block()
         self.close_f()
-    """
 
     def open_f(self):
         self.f = open(self.file_name, "w") 
@@ -78,7 +76,8 @@ class WriteTex:
                 line = fix_italic(line, replace_underscore=True)
                 self.f.write(line)
                 self.f.write('\n')
-        elif ("admonition" in block_type):
+        elif ("admonition" in block_type) & ("personal assistance" not in block_type):
+            #if block_type
             cpt = 0
             caption = block_type[11:]
             self.f.write(r'\begin{tcolorbox}[colback=mylightblue!5!white,colframe=mylightblue!75!black,title='+caption+']'+'\n')
@@ -128,7 +127,7 @@ class WriteTex:
 
                 if figure_format == "webp":
                     # replace webp animation by png image
-                    figure_format = "png"
+                    figure_format = ".png"
                     figure_name = figure_name.split('.')[0]+figure_format
 
                 if os.path.exists(absolute_path + figure_name) is False:

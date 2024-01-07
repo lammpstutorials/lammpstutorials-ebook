@@ -9,8 +9,6 @@ class FixDocument:
         super().__init__(*args, **kwargs)
         self.file_name = file_name
 
-
-    """
     def fix_document(self):
         # Improve the final document
         self.remove_space()
@@ -28,7 +26,6 @@ class FixDocument:
         keywords = [r'\noindent', r'\section', r'\subsection', r'\begin',
                     r'\begin{graytitle}', r'\end', r'\label']
         self.add_vspace(keywords, '0.25cm')
-    """
 
     def add_non_indent(self, keywords):
         """Add nonindent command where appropriate"""
