@@ -1,6 +1,6 @@
 
 
-tex/converted_files/
+**/converted_files/
 **/__pycache__/
 
 **/*.aux

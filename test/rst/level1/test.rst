@@ -7,13 +7,13 @@ Test RST file
 
    Small RST file for testing conversion
 
-.. figure:: water-adsorption-dark.png
+.. figure:: ../figures/water-adsorption-dark.png
     :alt: testing figure
     :height: 250
     :align: right
     :class: only-dark
 
-.. figure:: water-adsorption-light.png
+.. figure:: ../figures/water-adsorption-light.png
     :alt: testing figure
     :height: 250
     :align: right
@@ -30,12 +30,12 @@ Test RST file
 Figure
 ======
 
-.. figure:: example-1-light.png
+.. figure:: ../figures/example-1-light.png
     :alt: Test figure
     :class: only-light
     :name: fig-lennard-jones
 
-.. figure:: example-1-dark.png
+.. figure:: ../figures/example-1-dark.png
     :alt: Test figure
     :class: only-dark
 
@@ -59,6 +59,17 @@ Random text
     structurae micellarum sunt objecta principalia, scrutantes
     adsorptionem et aggregationem molecularem.
 
+Some sub title
+--------------
+
+..  container:: justify
+
+    Sub content
+
+.. math::
+
+    y = x^2
+
 Random LAMMPS code
 ==================
 
@@ -79,3 +90,31 @@ Random LAMMPS code
     thermo 100
     thermo_style custom step temp etotal
     run 1000
+
+Admonition
+==========
+
+.. admonition:: About admonition
+    :class: info
+
+    This is a class info with an equation.
+
+    .. math::
+        
+        y = a x + b
+
+    And some more text.
+
+..  container:: justify
+
+    Simulationes Monte Carlo et Dynamics Molecularis, in mundo soft
+    matter, repraesentationem materiae submolecularem exhibent,
+    delineantes thermodynamicas et kineticas proprietates systematum.
+    Moleculae surfactantes in solutionibus amphiphilicis et
+    structurae micellarum sunt objecta principalia, scrutantes
+    adsorptionem et aggregationem molecularem.
+
+Include-sub-text
+================
+
+.. include:: ../sub-content/subcontent.rst
