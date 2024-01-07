@@ -11,14 +11,14 @@ class ReadRST:
         super().__init__(*args, **kwargs)
         self.file_name = file_name
 
-    def convert_file(self):
-        """Main convert function."""
-        self.read_rst()
-        self.include_extra()
-        self.detect_blocks()
-        self.detect_sub_blocks()
-        self.detect_title()
-        self.detect_label_position()
+    #def convert_file(self):
+    #    """Main convert function."""
+    #    self.read_rst()
+    #    self.include_extra()
+    #    self.detect_blocks()
+    #    self.detect_sub_blocks()
+    #    self.detect_title()
+    #    self.detect_label_position()
 
     def read_rst(self):
         """Convert the rst file into a list of strings"""
@@ -31,9 +31,23 @@ class ReadRST:
             file_content.append(line)
         self.file_content = file_content
 
-    def include_extra(self):
+    def include_extra(self, rst_path, verbose = False):
         new_content = []
         for line in self.file_content:
+            if (" include::" in line):
+                relative_path = line.split("::")[1][1:]
+                if verbose:
+                    print(rst_path + relative_path)
+                rst = rstparse.Parser()
+                with open(rst_path+relative_path) as f:
+                    rst.read(f)
+                rst.parse()
+                for extra_line in rst.lines:
+                    new_content.append(extra_line)
+            new_content.append(line)
+
+
+            """
             if "non-tutorials/accessfile.rst" in line:
                 assert os.path.exists("../lammpstutorials.github.io/docs/sphinx/source/non-tutorials/accessfile.rst")
                 rst = rstparse.Parser()
@@ -44,6 +58,7 @@ class ReadRST:
                     new_content.append(extra_line)
             else:
                 new_content.append(line)
+            """
         self.file_content = new_content
 
     def detect_blocks(self):
@@ -97,8 +112,11 @@ class ReadRST:
                 new_block = True
             elif len(line) > 0:
                 if line[0] != ' ':
-                    cpt_main_block += 1
-                    new_block = True
+                    # titles
+                    if ('====' not in line) & ('****' not in line) & ('----' not in line):
+                        # ignore the underlines in titles
+                        cpt_main_block += 1
+                        new_block = True
             if new_block:
                 if ('container:: justify' in line) | ('container:: abstract' in line):
                     type = 'text'
@@ -130,16 +148,18 @@ class ReadRST:
         cpt_sub_block = 0
         ref_space_number = 0
         type = 'start'
-        for line in self.file_content:
+        for line, main_block_id in zip(self.file_content, self.main_block):
             new_block = False
             space_number = count_line(line)
             if (' .. ' in line) & ('...' not in line) & ('../' not in line):
-                # new main block with no indentation
-                cpt_sub_block += 1
+                # new sub block
+                cpt_sub_block = np.round(0.01 + cpt_sub_block, 2)
                 new_block = True
                 ref_space_number = space_number
             elif (space_number <= ref_space_number) & (len(line) > 0):
-                cpt_sub_block += 1
+                # main block with no indentation
+                cpt_sub_block = np.round(main_block_id * 1.0, 2)
+                cpt_sub_block = np.round(0.01 + cpt_sub_block, 2)
                 ref_space_number = space_number
                 new_block = True
                 type = 'unknown'

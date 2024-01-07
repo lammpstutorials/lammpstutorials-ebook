@@ -176,7 +176,7 @@ def filter_block(block_text, block_type):
     if (block_text is not None) & (block_type != 'unknown'):
         # put the lines into a list 
         filtered_text = []
-        for line in block_text[1:]:
+        for line in block_text[2:-1]:
             indentation = count_line(line)
             if (first_non_zero_indentation is None) & (indentation > 0) & (len(line) > 0):
                 first_non_zero_indentation = indentation
@@ -188,12 +188,15 @@ def filter_block(block_text, block_type):
                         itemize_indentation = indentation
 
             if (':class:' not in line) & (len(line) > 0) & (first_non_zero_indentation != None):
-                if (indentation == first_non_zero_indentation) | (indentation == itemize_indentation+2):
+                #if (indentation == first_non_zero_indentation)) | (indentation == itemize_indentation+2):
+                if (indentation >= first_non_zero_indentation):
                     if ('..' in line) & ('...' not in line) & ('../' not in line):
                         filtered_text.append('[insert-sub-block]')
                         n_subblock += 1
                     else:
                         filtered_text.append(line[first_non_zero_indentation:])
+            elif len(line) == 0:
+                filtered_text.append('')
         return filtered_text, n_subblock
     else:
         return None, 0
