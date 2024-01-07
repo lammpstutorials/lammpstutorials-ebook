@@ -9,8 +9,10 @@ class FixDocument:
         super().__init__(*args, **kwargs)
         self.file_name = file_name
 
+
+    """
     def fix_document(self):
-        """Improve the final document"""
+        # Improve the final document
         self.remove_space()
         keywords = [r'\end{lcverbatim}', r'\Large', r'\section{',
                     r'\section*{', r'\subsection*{', r'\label{',
@@ -26,13 +28,21 @@ class FixDocument:
         keywords = [r'\noindent', r'\section', r'\subsection', r'\begin',
                     r'\begin{graytitle}', r'\end', r'\label']
         self.add_vspace(keywords, '0.25cm')
+    """
 
     def add_non_indent(self, keywords):
         """Add nonindent command where appropriate"""
         initial_tex_file = self.import_tex_file()
         new_tex_file_name = []
         add_noindent = False
+        #inside_lcverbatim = False
         for line in initial_tex_file:
+
+            #if ('lcverbatim' in line) & ('begin' in line):
+            #    inside_lcverbatim = True 
+            #elif ('lcverbatim' in line) & ('end' in line):
+            #    inside_lcverbatim = False 
+
             if line != '\n':
                 prev_add_noindent = add_noindent
                 add_noindent = False
@@ -40,7 +50,7 @@ class FixDocument:
                     if word in line:
                         add_noindent = True
             if prev_add_noindent:
-                if "subsection" not in line:
+                if ("subsection" not in line): # & (inside_lcverbatim is not True):
                     new_tex_file_name.append(r'\noindent '+line)
                 else:
                     new_tex_file_name.append(line)
@@ -56,6 +66,7 @@ class FixDocument:
         new_tex_file_name = []
         consecutive_empty = 0
         to_fix = False
+        inside_lcverbatim = False
         for line in initial_tex_file:
             # remove double space
             previously_empty = consecutive_empty
@@ -69,11 +80,20 @@ class FixDocument:
                     if word in line:
                         to_fix = False
                 if to_fix:
-                    new_tex_file_name.append(r"\vspace{"+space+r"} \noindent " + line)
+                    if inside_lcverbatim is not True:
+                        new_tex_file_name.append(r"\vspace{"+space+r"} \noindent " + line)
+                    else:
+                        new_tex_file_name.append(line)
                 else:
                     new_tex_file_name.append(line)
             else:
                 new_tex_file_name.append(line)
+
+            if ('lcverbatim' in line) & ('begin' in line):
+                inside_lcverbatim = True 
+            elif ('lcverbatim' in line) & ('end' in line):
+                inside_lcverbatim = False
+
         self.write_file(new_tex_file_name)
 
     def remove_space(self):

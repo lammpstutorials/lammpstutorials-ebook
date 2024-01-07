@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 
 from utilities import replace_special_character, fix_math, fix_link, fix_italic, \
-                      clean_block, filter_block, identify_subblock_id, read_sublock
+                      clean_block, filter_block, identify_subblock_id, read_sublock, count_line
 
 class WriteTex:
     """Write Tex file."""
@@ -16,13 +16,15 @@ class WriteTex:
         self.git_path = git_path
         self.nonumber = nonumber
 
+    """
     def convert_file(self):
-        """Main convert function."""
+        # Main convert function.
         self.open_f()
         self.write_main_title()
         self.write_main_label()
         self.loop_on_block()
         self.close_f()
+    """
 
     def open_f(self):
         self.f = open(self.file_name, "w") 
@@ -36,6 +38,7 @@ class WriteTex:
                                                              self.RST.main_block_type,
                                                              self.RST.main_block, block_id)
             filtered_block, n_subblock = filter_block(raw_block, block_type)
+
             # Look for title
             if block_lines[0] in self.RST.title_positions:
                 title = self.RST.file_content[block_lines[0]]
@@ -43,7 +46,6 @@ class WriteTex:
                 block_type = np.array(self.RST.title_types)[np.array(self.RST.title_positions) == block_lines[0]]
             ids_subblock, types_subblock = identify_subblock_id(n_subblock, block_lines, self.RST)
             filtered_subblock, sub_block_number = read_sublock(n_subblock, filtered_block, ids_subblock, self.RST)
-            
             self.write_paragraph(filtered_block, block_type, filtered_subblock, ids_subblock, types_subblock, sub_block_number)
             self.write_equation(filtered_block, block_type)
             self.write_title(filtered_block, block_type)
@@ -89,13 +91,16 @@ class WriteTex:
                     filtered_subblock_0 = []
                     for line, n in zip(filtered_subblock, sub_block_number):
                         if n == cpt:
-                            filtered_subblock_0.append(line)
-                    if 'figure' not in types_subblock[cpt]:
+                            filtered_subblock_0.append(line)    
+                    if ('figure' not in types_subblock[cpt]) & ('math' in types_subblock[cpt]):
                         self.write_equation(filtered_subblock_0, types_subblock[cpt])
                     cpt += 1
                 else:
-                    self.f.write(line)
-                    self.f.write('\n')
+                    if ('math' not in types_subblock[cpt-1]):
+                        n = count_line(line)
+                        line = line[n:]
+                        self.f.write(line)
+                        self.f.write('\n')
             self.f.write(r'\end{tcolorbox}')
         elif "hatnote" in block_type:
             for line in filtered_block:
@@ -121,9 +126,6 @@ class WriteTex:
                 absolute_path = (self.rst_path + relative_path).strip()
                 figure_format = figure_name.split('.')[-1]
 
-                print(relative_path, figure_name, figure_format)
-                print(absolute_path + figure_name)
-
                 if figure_format == "webp":
                     # replace webp animation by png image
                     figure_format = "png"
@@ -131,7 +133,6 @@ class WriteTex:
 
                 if os.path.exists(absolute_path + figure_name) is False:
                     print("Warning, figure not found", absolute_path + figure_name)
-
 
                 if align is None:
                     self.f.write(r'\begin{figure}[h!]'+'\n')
@@ -222,7 +223,7 @@ class WriteTex:
             self.f.write(r'\end{lcverbatim}'+'\n')
         elif ("math" in block_type):
             for line in filtered_block:
-                    line = replace_special_character(line, 'Å', r'$\text{\AA{}}$')
-                    if len(line) > 0:
-                        self.f.write('$$' + line + '$$')
+                line = replace_special_character(line, 'Å', r'$\text{\AA{}}$')
+                if len(line) > 0:
+                    self.f.write('$$' + line + '$$')
         self.f.write('\n')

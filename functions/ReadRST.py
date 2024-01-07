@@ -34,7 +34,7 @@ class ReadRST:
     def include_extra(self, rst_path, verbose = False):
         new_content = []
         for line in self.file_content:
-            if (" include::" in line):
+            if ("include::" in line):
                 relative_path = line.split("::")[1][1:]
                 if verbose:
                     print(rst_path + relative_path)
@@ -44,7 +44,8 @@ class ReadRST:
                 rst.parse()
                 for extra_line in rst.lines:
                     new_content.append(extra_line)
-            new_content.append(line)
+            else:
+                new_content.append(line)
 
 
             """

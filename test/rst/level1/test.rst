@@ -97,13 +97,20 @@ Admonition
 .. admonition:: About admonition
     :class: info
 
-    This is a class info with an equation.
+    ..  container:: justify
+
+        This is a class info with an equation.
 
     .. math::
         
         y = a x + b
 
-    And some more text.
+    ..  container:: justify
+        
+        And some more text.
+
+        - list item 1
+        - list item 2
 
 ..  container:: justify
 
@@ -114,7 +121,14 @@ Admonition
     structurae micellarum sunt objecta principalia, scrutantes
     adsorptionem et aggregationem molecularem.
 
+    - list item 1
+    - list item 2
+
 Include-sub-text
 ================
 
 .. include:: ../sub-content/subcontent.rst
+
+.. container:: justify
+
+    Final text

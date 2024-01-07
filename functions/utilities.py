@@ -176,7 +176,14 @@ def filter_block(block_text, block_type):
     if (block_text is not None) & (block_type != 'unknown'):
         # put the lines into a list 
         filtered_text = []
-        for line in block_text[2:-1]:
+        if len(block_text[-1].strip()) > 0:
+            # last block of the page
+            boundaries = block_text[2:]
+        else:
+            # "normal" block
+            boundaries = block_text[2:-1]
+
+        for line in boundaries:
             indentation = count_line(line)
             if (first_non_zero_indentation is None) & (indentation > 0) & (len(line) > 0):
                 first_non_zero_indentation = indentation
