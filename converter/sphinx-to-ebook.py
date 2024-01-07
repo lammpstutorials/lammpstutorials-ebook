@@ -3,15 +3,17 @@
 
 import sys, os, git
 
-from ReadRST import ReadRST
-from WriteTEX import WriteTex
-from FixDocument import FixDocument
-
-from tutorialslist import tutorials, non_tutorials
-
 current_path = os.getcwd()
 git_repo = git.Repo(current_path, search_parent_directories=True)
 git_path = git_repo.git.rev_parse("--show-toplevel")
+
+from tutorialslist import tutorials, non_tutorials
+
+sys.path.append(git_path + "/functions/")
+
+from ReadRST import ReadRST
+from WriteTEX import WriteTex
+from FixDocument import FixDocument
 
 if os.path.exists(git_path+'/tex/converted_files') is False:
     os.mkdir(git_path+'/tex/converted_files')
