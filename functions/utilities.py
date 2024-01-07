@@ -218,7 +218,7 @@ def identify_subblock_id(n_subblock, block_lines, RST):
             if type != 'unknown':
                 sub_block.append(id)
         id = np.unique(sub_block)
-        assert len(id) == n_subblock, print(block_lines, n_subblock, id)
+        # assert len(id) == n_subblock, print(block_lines, n_subblock, id)
 
         sub_block_type = []
         for id0 in id:

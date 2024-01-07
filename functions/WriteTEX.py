@@ -43,8 +43,10 @@ class WriteTex:
                 filtered_block = title
                 block_type = np.array(self.RST.title_types)[np.array(self.RST.title_positions) == block_lines[0]]
             ids_subblock, types_subblock = identify_subblock_id(n_subblock, block_lines, self.RST)
-            filtered_subblock, sub_block_number = read_sublock(n_subblock, filtered_block, ids_subblock, self.RST)
-            self.write_paragraph(filtered_block, block_type, filtered_subblock, ids_subblock, types_subblock, sub_block_number)
+            filtered_subblock, sub_block_number = read_sublock(n_subblock, filtered_block,
+                                                               ids_subblock, self.RST)
+            self.write_paragraph(filtered_block, block_type, filtered_subblock,
+                                 ids_subblock, types_subblock, sub_block_number)
             self.write_equation(filtered_block, block_type)
             self.write_title(filtered_block, block_type)
         
@@ -66,6 +68,7 @@ class WriteTex:
         self.f.write('\n')
 
     def write_paragraph(self, filtered_block, block_type, filtered_subblock, ids_subblock, types_subblock, sub_block_number):
+        
         if ("text" in block_type):
             for line in filtered_block:
                 line = replace_special_character(line, '#', r'$\#$')
@@ -93,6 +96,8 @@ class WriteTex:
                             filtered_subblock_0.append(line)    
                     if ('figure' not in types_subblock[cpt]) & ('math' in types_subblock[cpt]):
                         self.write_equation(filtered_subblock_0, types_subblock[cpt])
+                    elif ('figure' not in types_subblock[cpt]) & ('lammps-equation' in types_subblock[cpt]):
+                        self.write_equation(filtered_subblock_0, types_subblock[cpt])
                     cpt += 1
                 else:
 
@@ -100,7 +105,7 @@ class WriteTex:
                         self.f.write(line)
                         self.f.write('\n')
                     else:
-                        if ('math' not in types_subblock[cpt-1]):
+                        if ('math' not in types_subblock[cpt-1]) & ('lammps-equation' not in types_subblock[cpt-1]):
                             n = count_line(line)
                             line = line[n:]
                             self.f.write(line)
@@ -212,7 +217,7 @@ class WriteTex:
             self.f.write(r'\begin{lcverbatim}'+'\n')
             for line in filtered_block:
                 if ':caption:' not in line:
-                    if len(line) > 76:
+                    if len(line) >= 76:
                         print(line)
                     assert len(line) < 76, """WARNING: line too long"""
                     self.f.write(line)

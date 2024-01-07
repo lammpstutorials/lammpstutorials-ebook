@@ -24,7 +24,7 @@ class FixDocument:
         self.write_legend()
         self.remove_space()
         keywords = [r'\noindent', r'\section', r'\subsection', r'\begin',
-                    r'\begin{graytitle}', r'\end', r'\label']
+                    r'\begin{graytitle}', r'\end', r'\label', r'$$']
         self.add_vspace(keywords, '0.25cm')
 
     def add_non_indent(self, keywords):

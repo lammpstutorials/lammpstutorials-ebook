@@ -122,6 +122,32 @@ Admonition
         - list item 1
         - list item 2
 
+    .. math::
+        
+        y = x^2
+
+    ..  container:: justify
+
+        Simulationes Monte Carlo et Dynamics Molecularis, in mundo soft
+        matter, repraesentationem materiae submolecularem exhibent.
+
+    .. code-block:: lammps
+
+        fix npt1 all npt temp 300 300 0.1 y 1 1 1 z 1 1 1
+
+    ..  container:: justify
+
+        instead of:
+
+    .. code-block:: lammps
+
+        fix nvt1 all nvt temp 300 300 0.1
+
+    ..  container:: justify
+
+        Simulationes Monte Carlo et Dynamics Molecularis, in mundo soft
+        matter, repraesentationem materiae submolecularem exhibent.
+
 ..  container:: justify
 
     Simulationes Monte Carlo et Dynamics Molecularis, in mundo soft
