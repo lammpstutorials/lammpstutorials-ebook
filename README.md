@@ -8,6 +8,12 @@ of [LAMMPS tutorials](https://lammpstutorials.github.io/) into LaTeX.
   <img src="logo/first-page.png" width="100%" /></a>
 </p>
 
-## The pdf
+## Clone the repository
 
-Find the 
+Clone the repository with its submodule using
+
+```bash
+git clone https://github.com/lammpstutorials/lammpstutorials-ebook.git --recurse-submodules
+```
+
+Use the *compile-ebook.sh* script to compile the pdf.
