@@ -7,4 +7,4 @@
 **/*.log
 **/*.out
 **/*.toc
-**/*.pdf
+test/test-ebook.pdf
