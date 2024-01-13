@@ -8,7 +8,7 @@ of [LAMMPS tutorials](https://lammpstutorials.github.io/) into LaTeX.
   <img src="logo/first-page.png" width="100%" /></a>
 </p>
 
-## Clone the repository
+## Obtain the pdf
 
 Clone the repository with its submodule using
 
