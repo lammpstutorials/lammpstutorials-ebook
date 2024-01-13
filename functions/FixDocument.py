@@ -1,5 +1,6 @@
 from utilities import is_in_verbatim, read_label, read_link
 import numpy as np
+import validators
 
 
 class FixDocument:
@@ -209,14 +210,16 @@ class FixDocument:
         # remove extra space
         new_tex_file_name = []
         for line in initial_tex_file:
-            if '../../inputs/' in line:
+            if "../lammpstutorials-inputs/" in line:
                 rest, link = read_link(line)
                 assert "\href" in rest[0], """Unexpected link"""
                 actual_link = 'https://lammpstutorials.github.io/'+link[0].split('../')[-1]
+                test_link = validators.url(actual_link)
+                if test_link is not True:
+                    print("WARNING: Broken link")
+                    print(actual_link)
+
                 new_line = rest[0] + "{" +  actual_link + "}{"+ link[1] +  "}" + rest[2]
-                #block = new_line.split("\href")
-                #assert len(block) == 2
-                #new_line = block[0] + r'Tutorial\,\href' + block[1]
                 new_tex_file_name.append(new_line)
             else:
                 new_tex_file_name.append(line)

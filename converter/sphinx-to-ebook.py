@@ -22,8 +22,6 @@ for level in tutorials.keys():
     if os.path.exists(git_path+'/tex/converted_files/'+level) is False:
         os.mkdir(git_path+'/tex/converted_files/'+level)
     for tutorial in tutorials[level]:
-        print(level, "tutorial", tutorial)
-        print("-----------------------------------------")
         rst_path = git_path+'/lammpstutorials.github.io/docs/sphinx/source/tutorials/'+level+'/'
         rst_file_name = rst_path+tutorial+'.rst'
         tex_file_name = git_path+'/tex/converted_files/'+level+'/'+tutorial+'.tex'   
@@ -42,8 +40,6 @@ for level in non_tutorials.keys():
     if os.path.exists(git_path+'/tex/converted_files/'+level) is False:
         os.mkdir(git_path+'/tex/converted_files/'+level)
     for tutorial in non_tutorials[level]:
-        print(level, "tutorial", tutorial)
-        print("-----------------------------------------")
         rst_path = git_path+'/lammpstutorials.github.io/docs/sphinx/source/tutorials/'+level+'/'
         rst_file_name = rst_path+tutorial+'.rst'
         tex_file_name = git_path+'/tex/converted_files/'+level+'/'+tutorial+'.tex'   
@@ -54,9 +50,6 @@ for level in non_tutorials.keys():
         TEX.convert_file()
         FIX = FixDocument(tex_file_name)
         FIX.fix_document()
-    
-print("before-you-start")
-print("-----------------------------------------")
 
 rst_path = git_path + '/lammpstutorials.github.io/docs/sphinx/source/non-tutorials/'
 rst_file_name = rst_path + 'before-you-start.rst'
@@ -69,9 +62,6 @@ TEX.convert_file()
 FIX = FixDocument(tex_file_name)
 FIX.fix_document()
 
-print("solutions")
-print("-----------------------------------------")
-
 rst_path = git_path + '/lammpstutorials.github.io/docs/sphinx/source/non-tutorials/'
 rst_file_name = rst_path + 'solutions.rst'
 tex_file_name = git_path+'/tex/converted_files/non-tutorials/solutions.tex'
@@ -82,3 +72,5 @@ TEX = WriteTex(tex_file_name, RST, git_path, rst_path, nonumber=True)
 TEX.convert_file()
 FIX = FixDocument(tex_file_name)
 FIX.fix_document()
+
+print("Compilation completed")

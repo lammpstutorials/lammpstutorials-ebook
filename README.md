@@ -1,4 +1,4 @@
-# LAMMPS tutorials: the ebook
+# LAMMPS tutorials: the living ebook
 
 This repository contains Python scripts for converting the sphinx documentation
 of [LAMMPS tutorials](https://lammpstutorials.github.io/) into LaTeX.

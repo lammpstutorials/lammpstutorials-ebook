@@ -263,6 +263,7 @@ def read_label(sub_line):
     return label, rest
 
 def read_link(sub_line):
+    # detect the text within { }
     cpt_link = 0
     cpt_rest = 0
     rest = ["", "", ""]
@@ -279,10 +280,9 @@ def read_link(sub_line):
             link[cpt_link] += letter
         elif in_link is False:
             rest[cpt_rest] += letter
+    # remove the "../"
+    link[0] = link[0].replace("../", "")
     return rest, link
-
-
-
 
 
 
