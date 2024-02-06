@@ -73,4 +73,15 @@ TEX.convert_file()
 FIX = FixDocument(tex_file_name)
 FIX.fix_document()
 
+rst_path = git_path + '/lammpstutorials.github.io/docs/sphinx/source/non-tutorials/'
+rst_file_name = rst_path + 'glossary.rst'
+tex_file_name = git_path+'/tex/converted_files/non-tutorials/glossary.tex'
+RST = ReadRST(rst_file_name, rst_path)
+RST.convert_file()
+assert len(RST.label_positions) == 1, """Careful, more than one label"""
+TEX = WriteTex(tex_file_name, RST, git_path, rst_path, nonumber=True)
+TEX.convert_file()
+FIX = FixDocument(tex_file_name)
+FIX.fix_document()
+
 print("Compilation completed")
