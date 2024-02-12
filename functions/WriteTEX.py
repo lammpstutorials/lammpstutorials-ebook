@@ -3,7 +3,8 @@ import numpy as np
 from PIL import Image
 
 from utilities import replace_special_character, fix_math, fix_link, fix_italic, \
-                      clean_block, filter_block, identify_subblock_id, read_sublock, count_line
+                      clean_block, filter_block, identify_subblock_id, read_sublock, \
+                      count_line, fix_citation
 
 class WriteTex:
     """Write Tex file."""
@@ -76,6 +77,7 @@ class WriteTex:
                 line = replace_special_character(line, '*->*', r'$\rightarrow$')
                 line = fix_link(self.RST, line)
                 line = fix_math(line)
+                line = fix_citation(line)
                 line = fix_italic(line, replace_underscore=True)
                 self.f.write(line)
                 self.f.write('\n')

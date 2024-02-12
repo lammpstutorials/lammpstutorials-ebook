@@ -65,6 +65,30 @@ def fix_math(line):
         return new_line
     else:
         return line
+    
+def fix_citation(line):
+    """Deal with links"""
+    if ':cite:' in line:
+        # _, pos_cite = count_occurence(line, ':cite:')
+        _, pos_eq = count_occurence(line, "`")
+        reference = []
+        for ini, end in zip(pos_eq[::2], pos_eq[1::2]):
+            reference.append(line[ini:end+1][1:-1])
+        sentence = line.split('`')
+        new_line = ''
+        for part in sentence:
+            if part not in reference:
+                new_line += part
+            else:
+                replacement = '\cite{'+part+'}'
+                new_line += replacement
+        rests = new_line.split(':cite:')
+        new_line = ''
+        for rest in rests:
+            new_line += rest
+        return new_line
+    else:
+        return line
 
 def fix_link(RST, line):
     """Deal with links"""
