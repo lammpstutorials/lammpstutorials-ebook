@@ -11,8 +11,13 @@ cd converter/
 python3 sphinx-to-ebook.py
 cd ..
 
+# copy bib file (careful with special caracters)
+#cp lammpstutorials.github.io/docs/sphinx/source/journal-article.bib tex/bibliography.bib
+
 cd tex/
 # compile pdf
+pdflatex lammps-tutorials-ebook.tex
+bibtex lammps-tutorials-ebook
 pdflatex lammps-tutorials-ebook.tex
 pdflatex lammps-tutorials-ebook.tex
 

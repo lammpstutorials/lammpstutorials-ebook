@@ -30,7 +30,7 @@ Test RST file
 ..  container:: abstract
 
     Simulationes Monte Carlo et Dynamics Molecularis, in mundo soft
-    matter, repraesentationem materiae submolecularem exhibent,
+    matter, repraesentationem materiae submolecularem exhibent, :cite:`lammps1994`
     delineantes thermodynamicas et kineticas proprietates systematum.
     Moleculae surfactantes in solutionibus amphiphilicis et
     structurae micellarum sunt objecta principalia, scrutantes
