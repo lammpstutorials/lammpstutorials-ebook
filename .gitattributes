@@ -1,1 +1,2 @@
 tex/lammps-tutorials-ebook.pdf filter=lfs diff=lfs merge=lfs -text
+ebook/lammps-tutorials-ebook-lm.pdf filter=lfs diff=lfs merge=lfs -text

@@ -26,3 +26,5 @@ mv lammps-tutorials-ebook.pdf _lammps-tutorials-ebook.pdf
 pdftk ../logo/first-page.pdf _lammps-tutorials-ebook.pdf cat output lammps-tutorials-ebook.pdf
 rm _lammps-tutorials-ebook.pdf
 cd ..
+
+cp tex/lammps-tutorials-ebook.pdf ebook/lammps-tutorials-ebook-lm.pdf

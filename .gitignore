@@ -8,6 +8,3 @@
 **/*.toc
 **/*.bbl
 **/*.blg
-
-test/test-ebook.pdf
-tex/lammps-tutorials-ebook.pdf
