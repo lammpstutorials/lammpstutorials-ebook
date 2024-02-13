@@ -11,6 +11,8 @@ from tutorialslist import tutorials, non_tutorials
 
 sys.path.append(git_path + "/functions/")
 
+mode="dark"
+
 from ReadRST import ReadRST
 from WriteTEX import WriteTex
 from FixDocument import FixDocument
@@ -28,7 +30,7 @@ for level in tutorials.keys():
         RST = ReadRST(rst_file_name, rst_path)
         RST.convert_file()
         assert len(RST.label_positions) == 1, """Careful, more than one label"""
-        TEX = WriteTex(tex_file_name, RST, git_path, rst_path)
+        TEX = WriteTex(tex_file_name, RST, git_path, rst_path, mode)
         TEX.convert_file()
         FIX = FixDocument(tex_file_name)
         FIX.fix_document()
@@ -46,7 +48,7 @@ for level in non_tutorials.keys():
         RST = ReadRST(rst_file_name, rst_path)
         RST.convert_file()
         assert len(RST.label_positions) == 1, """Careful, more than one label"""
-        TEX = WriteTex(tex_file_name, RST, git_path, rst_path, nonumber=True)
+        TEX = WriteTex(tex_file_name, RST, git_path, rst_path, mode, nonumber=True)
         TEX.convert_file()
         FIX = FixDocument(tex_file_name)
         FIX.fix_document()
@@ -57,7 +59,7 @@ tex_file_name = git_path+'/tex/converted_files/non-tutorials/before-you-start.te
 RST = ReadRST(rst_file_name, rst_path)
 RST.convert_file()
 assert len(RST.label_positions) == 1, """Careful, more than one label"""
-TEX = WriteTex(tex_file_name, RST, git_path, rst_path, nonumber=True)
+TEX = WriteTex(tex_file_name, RST, git_path, rst_path, mode, nonumber=True)
 TEX.convert_file()
 FIX = FixDocument(tex_file_name)
 FIX.fix_document()
@@ -68,7 +70,7 @@ tex_file_name = git_path+'/tex/converted_files/non-tutorials/solutions.tex'
 RST = ReadRST(rst_file_name, rst_path)
 RST.convert_file()
 assert len(RST.label_positions) == 1, """Careful, more than one label"""
-TEX = WriteTex(tex_file_name, RST, git_path, rst_path, nonumber=True)
+TEX = WriteTex(tex_file_name, RST, git_path, rst_path, mode, nonumber=True)
 TEX.convert_file()
 FIX = FixDocument(tex_file_name)
 FIX.fix_document()
@@ -79,7 +81,7 @@ tex_file_name = git_path+'/tex/converted_files/non-tutorials/glossary.tex'
 RST = ReadRST(rst_file_name, rst_path)
 RST.convert_file()
 assert len(RST.label_positions) == 1, """Careful, more than one label"""
-TEX = WriteTex(tex_file_name, RST, git_path, rst_path, nonumber=True)
+TEX = WriteTex(tex_file_name, RST, git_path, rst_path, mode, nonumber=True)
 TEX.convert_file()
 FIX = FixDocument(tex_file_name)
 FIX.fix_document()

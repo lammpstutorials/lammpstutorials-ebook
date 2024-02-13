@@ -8,7 +8,7 @@ from utilities import replace_special_character, fix_math, fix_link, fix_italic,
 
 class WriteTex:
     """Write Tex file."""
-    def __init__(self, file_name, RST, git_path, rst_path, nonumber = False, *args, **kwargs,):
+    def __init__(self, file_name, RST, git_path, rst_path, mode, nonumber = False, *args, **kwargs,):
         """Initialize"""
         super().__init__(*args, **kwargs)
         self.file_name = file_name
@@ -16,6 +16,7 @@ class WriteTex:
         self.rst_path = rst_path
         self.git_path = git_path
         self.nonumber = nonumber
+        self.mode = mode
 
     def convert_file(self):
         # Main convert function.
@@ -121,72 +122,63 @@ class WriteTex:
                 '}}'
                 + r'\vspace{0.5cm} }')
                 self.f.write('\n')
-        elif "figure::" in block_type:
-            if "dark" in block_type:
-                pass
-            else:
-                align = None
-                for line in filtered_block:
-                    if "height" in line:
-                        height = line[9:]
-                    elif "align" in line:
-                        align = line[8:]
-                figure_path_and_name = block_type.split('::')[1].strip()
-                figure_name = figure_path_and_name.split('/')[-1]
-                relative_path = figure_path_and_name[:-len(figure_name)]
-                absolute_path = (self.rst_path + relative_path).strip()
-                figure_format = figure_name.split('.')[-1]
+        elif ("figure::" in block_type) & (self.mode == "light") & ("light" in block_type):
+            align = None
+            for line in filtered_block:
+                if "height" in line:
+                    height = line[9:]
+                elif "align" in line:
+                    align = line[8:]
+            figure_path_and_name = block_type.split('::')[1].strip()
+            figure_name = figure_path_and_name.split('/')[-1]
+            relative_path = figure_path_and_name[:-len(figure_name)]
+            absolute_path = (self.rst_path + relative_path).strip()
+            figure_format = figure_name.split('.')[-1]
 
-                if figure_format == "webp":
-                    # replace webp animation by png image
-                    figure_format = ".png"
-                    figure_name = figure_name.split('.')[0]+figure_format
+            if figure_format == "webp":
+                # replace webp animation by png image
+                figure_format = ".png"
+                figure_name = figure_name.split('.')[0]+figure_format
 
-                if os.path.exists(absolute_path + figure_name) is False:
-                    print("Warning, figure not found", absolute_path + figure_name)
+            if os.path.exists(absolute_path + figure_name) is False:
+                print("Warning, figure not found", absolute_path + figure_name)
 
-                if align is None:
-                    self.f.write(r'\begin{figure}[h!]'+'\n')
-                    self.f.write(r'\includegraphics[width=\linewidth]{' + absolute_path + figure_name + '}'+'\n')
-                    self.f.write(r'\end{figure}'+'\n')  
-                elif 'right' in align:
-                    self.f.write(r'\hspace{-0.45cm}')
-                    self.f.write(r'\begin{wrapfigure}{r}{4cm}'+'\n')
-                    self.f.write(r'\includegraphics[width=4cm]{' + absolute_path + figure_name + '}'+'\n')
-                    self.f.write(r'\end{wrapfigure}'+'\n')
-
-
-                """
-                figure_path = self.git_path+'/lammpstutorials.github.io/docs/sphinx/source/tutorials/'+path[3:]
-
-                if "tutorials/tutorials" in figure_path:
-                    figure_path = figure_path.split("tutorials/tutorials")[0] + "tutorials" + figure_path.split("tutorials/tutorials")[1]
-                
-                level = figure_path.split('/')[-3]
-                tutorial = figure_path.split('/')[-2]
-                name = figure_path.split('/')[-1].split('.')[0]
-
-                if os.path.exists(self.git_path+'/tex/converted_files/'+level+'/'+tutorial) is False:
-                    os.mkdir(self.git_path+'/tex/converted_files/'+level+'/'+tutorial+'/')
-                alternative_figure = figure_path[:-len(figure_format)]+'png'
-                new_figure = self.git_path+'/tex/converted_files/'+level+'/'+tutorial+'/'+name+'.png'
-                if os.path.exists(alternative_figure):
-                    shutil.copyfile(alternative_figure, new_figure)
-                else:         
-                    im = Image.open(figure_path).convert('RGB')
-                    im.save(new_figure, 'png')
-
-                if align is None:
-                    self.f.write(r'\begin{figure}[h!]'+'\n')
-                    self.f.write(r'\includegraphics[width=\linewidth]{converted_files/'+level+'/'+tutorial+'/'+name+'.png}'+'\n')
-                    self.f.write(r'\end{figure}'+'\n')  
-                elif 'right' in align:
-                    self.f.write(r'\hspace{-0.45cm}')
-                    self.f.write(r'\begin{wrapfigure}{r}{4cm}'+'\n')
-                    self.f.write(r'\includegraphics[width=4cm]{converted_files/'+level+'/'+tutorial+'/'+name+'.png}'+'\n')
-                    self.f.write(r'\end{wrapfigure}'+'\n')
-
-                """
+            if align is None:
+                self.f.write(r'\begin{figure}[h!]'+'\n')
+                self.f.write(r'\includegraphics[width=\linewidth]{' + absolute_path + figure_name + '}'+'\n')
+                self.f.write(r'\end{figure}'+'\n')  
+            elif 'right' in align:
+                self.f.write(r'\hspace{-0.45cm}')
+                self.f.write(r'\begin{wrapfigure}{r}{4cm}'+'\n')
+                self.f.write(r'\includegraphics[width=4cm]{' + absolute_path + figure_name + '}'+'\n')
+                self.f.write(r'\end{wrapfigure}'+'\n')
+        elif ("figure::" in block_type) & (self.mode == "dark") & ("dark" in block_type):
+            align = None
+            for line in filtered_block:
+                if "height" in line:
+                    height = line[9:]
+                elif "align" in line:
+                    align = line[8:]
+            figure_path_and_name = block_type.split('::')[1].strip()
+            figure_name = figure_path_and_name.split('/')[-1]
+            relative_path = figure_path_and_name[:-len(figure_name)]
+            absolute_path = (self.rst_path + relative_path).strip()
+            figure_format = figure_name.split('.')[-1]
+            if figure_format == "webp":
+                # replace webp animation by png image
+                figure_format = ".png"
+                figure_name = figure_name.split('.')[0]+figure_format
+            if os.path.exists(absolute_path + figure_name) is False:
+                print("Warning, figure not found", absolute_path + figure_name)
+            if align is None:
+                self.f.write(r'\begin{figure}[h!]'+'\n')
+                self.f.write(r'\includegraphics[width=\linewidth]{' + absolute_path + figure_name + '}'+'\n')
+                self.f.write(r'\end{figure}'+'\n')  
+            elif 'right' in align:
+                self.f.write(r'\hspace{-0.45cm}')
+                self.f.write(r'\begin{wrapfigure}{r}{4cm}'+'\n')
+                self.f.write(r'\includegraphics[width=4cm]{' + absolute_path + figure_name + '}'+'\n')
+                self.f.write(r'\end{wrapfigure}'+'\n')
 
         elif "figurelegend" in block_type:
             for line in filtered_block:
