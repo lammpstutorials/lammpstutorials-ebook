@@ -8,3 +8,7 @@
 **/*.toc
 **/*.bbl
 **/*.blg
+
+tex-light/*.pdf
+tex-dark/*.pdf
+**/lammps-tutorials-ebook.pdf
