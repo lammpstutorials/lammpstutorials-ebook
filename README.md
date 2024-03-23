@@ -6,7 +6,7 @@ of [LAMMPS tutorials](https://lammpstutorials.github.io/) into LaTeX.
 ## Download the pdf
 
 The pdf is available in [light](ebook/lammps-tutorials-ebook-lm.pdf)
-and [dark](ebook/lammps-tutorials-ebook-dm.pdf) modes, and can
+and [dark](ebook/lammps-tutorials-ebook-dm.pdf) modes and can
 be downloaded from [the ebook/](ebook/) folder.
 
 <p float="left">
