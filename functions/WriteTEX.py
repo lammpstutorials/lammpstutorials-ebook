@@ -73,6 +73,7 @@ class WriteTex:
         
         if ("text" in block_type):
             for line in filtered_block:
+                line = replace_special_character(line, '* 1', r'$\star 1$')
                 line = replace_special_character(line, '#', r'$\#$')
                 line = replace_special_character(line, 'Å', r'$\text{\AA{}}$')
                 line = replace_special_character(line, '*->*', r'$\rightarrow$')
