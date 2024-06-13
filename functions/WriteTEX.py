@@ -83,7 +83,7 @@ class WriteTex:
                 line = fix_italic(line, replace_underscore=True)
                 self.f.write(line)
                 self.f.write('\n')
-        elif ("admonition" in block_type) & ("Looking for support" not in block_type):
+        elif ("admonition" in block_type) & ("You can support" not in block_type):
             #if block_type
             cpt = 0
             caption = block_type[11:]

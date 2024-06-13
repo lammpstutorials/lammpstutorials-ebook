@@ -301,7 +301,11 @@ def read_link(sub_line):
             in_link=False
             cpt_link += 1
         elif in_link:
-            link[cpt_link] += letter
+            try:
+                link[cpt_link] += letter
+            except:
+                print(sub_line)
+                stop
         elif in_link is False:
             rest[cpt_rest] += letter
     # remove the "../"
